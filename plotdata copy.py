@@ -4,12 +4,25 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 #importing data set
 #dataset = open("test.csv",'r').read()
-lista = [0,128,256,384,512,640,768,896]
-lenth = len(lista)
+lista = [ ]
+listsize = 0
+try:
+    dataset = open("ReadImu.csv",'r').readlines()
+    listsize = len(dataset)
+    print(listsize)
+except:
+    print("Could not open CSV file\n")
+    
+temp = 0
+for i in range(0,(int(listsize/128))):
+    
+    lista.append(temp)
+    temp = temp +128
+
 i = 0
-while i <= lenth:
+while i <= listsize:
     try:
-        dataset = open("test.csv",'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open("ReadImu.csv",'r').readlines()[lista[i]:lista[i+1]]
     except:
         break
     #lines = dataset.split("\n")
@@ -31,12 +44,13 @@ while i <= lenth:
             
             sample,aax,aay,aaz,xx,yy,zz = line.split(',')
             t.append(float(sample))
-            ax.append(float(aax)+0.4)
-            ay.append(float(aay)+0.5)
-            az.append(float(aaz)-0.4)
-            x.append(float(xx))
-            y.append(float(yy)+43)
-            z.append(float(zz))
+            ax.append(float(aax)-0.1044676)
+            ay.append(float(aay)+0.0477295)
+            az.append(float(aaz)-0.9561013)
+
+            x.append(float(xx)+4.5992367)
+            y.append(float(yy)+43.36626)
+            z.append(float(zz)-1.5074805)
 
 
 
@@ -45,23 +59,31 @@ while i <= lenth:
 
     # For Sine Function
    
-    plt.figure(i)
-    plt.title("Accelelometr")
+    plt.figure(1)
+    plt.title("Acc")
     plt.plot(t, ax)
     plt.plot(t, ay)
     plt.plot(t, az)
-    plt.legend()
-    plt.savefig(f"ACC\\{i}.png")
-
-    plt.figure(i+1)
-    plt.title("Gyroscope")
+    plt.legend(['Ax','Ay','Az'])
+    plt.xlabel("Sample number")
+    plt.ylabel("Readed value")
+    plt.ylim(-5,5)
+    plt.savefig(f"Acc\\{i}.png")
+    
+    plt.figure(2)
+    plt.title("Gyro")
     plt.plot(t, x)
     plt.plot(t, y)
     plt.plot(t, z)
-    plt.legend()
+    plt.legend(['Gx','Gy','Gz'])
+    plt.ylim(-5,5)
+    plt.xlabel("Sample number")
+    plt.ylabel("Readed value")
     plt.savefig(f"Gyro\\{i}.png")
-    plt.figure(i).clear()
-    plt.figure(i+1).clear()
+    
+    plt.figure(1).clear()
+    plt.figure(2).clear()
+    
     #plt.savefig('my_plot.png')
  
 

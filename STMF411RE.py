@@ -1,7 +1,7 @@
 import serial 
 import time
 
-sample = 0
+
 
 
 class ST_F411:
@@ -15,7 +15,7 @@ class ST_F411:
     def __init__(self, portCOM, baudrate):
         self.portCOM = portCOM
         self.baudrate = baudrate
-
+        self.sample = 0
         self.ST_F411  = serial.Serial(port=self.portCOM ,baudrate=self.baudrate)
 
 
@@ -40,12 +40,20 @@ class ST_F411:
         description: Read from portCOM and store the data in CSV file 
         """
         self.buffor = buffor
-        self.file = open(filePath,'a+')
-        self.sampe  =0
+        
+        self.sample  =0
         while(self.ST_F411.readable()):
+            self.file = open(filePath,'a+')
             self.buffor=self.ST_F411.readline().decode('ascii')
             self.sample =  self.sample+1
-            self.file.write(f"{sample},{buffor}")
+            self.file.write(f"{self.sample},{self.buffor}")
 
-
+    def ST_F411_DeInit(self):
+        """
+        STEval_DeInit()
+        return: NONE
+        param: None
+        description: deinitialize ST_F411 controler and close portCOM
+        """
+        self.ST_F411.close()
 
