@@ -44,6 +44,8 @@ class ST_EVal:
         time.sleep(1/10)
         self.STEval.write(self.stEVAL_CMD["PING"])
         time.sleep(1/10)
+        self.STEval.write(self.stEVAL_CMD["FAULTACK"])
+        time.sleep(1/10)
 
     def STEval_Motor_Start(self):
         """
