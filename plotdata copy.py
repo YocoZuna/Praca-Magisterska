@@ -6,8 +6,9 @@ from sklearn.impute import SimpleImputer
 #dataset = open("test.csv",'r').read()
 lista = [ ]
 listsize = 0
+PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
 try:
-    dataset = open("ReadImu.csv",'r').readlines()
+    dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
     print(listsize)
 except:
@@ -22,7 +23,7 @@ for i in range(0,(int(listsize/128))):
 i = 0
 while i <= listsize:
     try:
-        dataset = open("ReadImu.csv",'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open(PathToFile ,'r').readlines()[lista[i]:lista[i+1]]
     except:
         break
     #lines = dataset.split("\n")
@@ -68,7 +69,7 @@ while i <= listsize:
     plt.xlabel("Sample number")
     plt.ylabel("Readed value")
     plt.ylim(-5,5)
-    plt.savefig(f"Acc\\{i}.png")
+    #plt.savefig(f"Acc\\{i}.png")
     
     plt.figure(2)
     plt.title("Gyro")
@@ -79,8 +80,8 @@ while i <= listsize:
     plt.ylim(-5,5)
     plt.xlabel("Sample number")
     plt.ylabel("Readed value")
-    plt.savefig(f"Gyro\\{i}.png")
-    
+    #plt.savefig(f"Gyro\\{i}.png")
+    plt.show() 
     plt.figure(1).clear()
     plt.figure(2).clear()
     
