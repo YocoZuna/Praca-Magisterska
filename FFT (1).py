@@ -9,7 +9,8 @@ from scipy.fft import rfft, rfftfreq
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
+PathToFile = "Idle\\ReadImu.csv"
+
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
@@ -23,27 +24,30 @@ for i in range(0,(int(listsize/128))):
     lista.append(temp)
     temp = temp +128
 
-i = 0
-t = []
-ax=[]
-ay = []
-az = []
-x = []
-y = []
-z = []
+
 
 lenth = len(lista)
-i = 0
-while i <= lenth:
+iterration= 0
+while iterration <= lenth:
     try:
-        dataset = open(PathToFile,'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open(PathToFile,'r').readlines()
+        temp1 = lista[iterration]
+        temp2 = lista[iterration+1]
+        dataset = dataset[temp1:temp2]
     except:
         break
     
     #lines = dataset.split("\n")
-    i+=1
+    iterration+=1
     lines = dataset
     
+    t = []
+    ax=[]
+    ay = []
+    az = []
+    x = []
+    y = []
+    z = []
 
 
 
@@ -62,7 +66,7 @@ while i <= lenth:
 
 
 
-    
+    print(f"t {t[0]}\n t {t[-1]}\n")
 
     axyfft = rfft(ax)
     axfft = rfftfreq(len(ax), 1/200)
@@ -82,12 +86,12 @@ while i <= lenth:
     plt.plot(ayfft, np.abs(ayyfft))
     plt.plot(azfft, np.abs(azyfft))
     plt.legend(['Ax','Ay','Az'])
-    plt.show()
+  
 
 
-    plt.figure(1).clear()
+    #plt.figure(1).clear()
 
-       
+    plt.show()   
 
 
  

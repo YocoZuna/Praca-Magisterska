@@ -38,15 +38,18 @@ i = 0
 
 
 lenth = len(lista)
-i = 0
-while i <= lenth:
+iterration= 0
+while iterration <= lenth:
     try:
-        dataset = open(PathToFile,'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open(PathToFile,'r').readlines()
+        temp1 = lista[iterration]
+        temp2 = lista[iterration+1]
+        dataset = dataset[temp1:temp2]
     except:
         break
     
     #lines = dataset.split("\n")
-    i+=1
+    iterration+=1
     lines = dataset
     
 
@@ -66,24 +69,24 @@ while i <= lenth:
 
 
 
-window_length = 128;
-window = np.hamming(window_length);
-signal = [ax,ay,az,x,y,z]
-fs = 200
-for i in signal:
-    #window = np.kaiser(window_length,5);
-    overlap = math.floor(window_length*0.5-1);
-    fft_length = window_length*2;
-    stft_frequency, stft_time, signal_stft = sp.stft(i,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
-    signal_stft = signal_stft[0:window_length-1,:];
-    stft_frequency = stft_frequency[0:window_length-1];
-    signal_stft_abs = abs(signal_stft);
+    window_length = 128;
+    window = np.hamming(window_length);
+    signal = [ax,ay,az,x,y,z]
+    fs = 200
+    for i in signal:
+        #window = np.kaiser(window_length,5);
+        overlap = math.floor(window_length*0.5-1);
+        fft_length = window_length*2;
+        stft_frequency, stft_time, signal_stft = sp.stft(i,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
+        signal_stft = signal_stft[0:window_length-1,:];
+        stft_frequency = stft_frequency[0:window_length-1];
+        signal_stft_abs = abs(signal_stft);
 
 
-    plt.figure();
-    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
-    plt.ylabel('Frequency (Hz)');
-    plt.xlabel('Time (s)');
+        plt.figure();
+        plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+        plt.ylabel('Frequency (Hz)');
+        plt.xlabel('Time (s)');
 
-plt.show()
+        plt.show()
 

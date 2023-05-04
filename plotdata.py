@@ -8,14 +8,19 @@ lista = [0,128,256,384,512,640,768,896]
 
 import os 
 lenth = len(lista)
-i = 0
-while i <= lenth:
+
+iterration= 0
+while iterration <= lenth:
     try:
-        dataset = open("test.csv",'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open(PathToFile,'r').readlines()
+        temp1 = lista[iterration]
+        temp2 = lista[iterration+1]
+        dataset = dataset[temp1:temp2]
     except:
         break
+    
     #lines = dataset.split("\n")
-    i+=1
+    iterration+=1
     lines = dataset
     t = []
     ax=[]
