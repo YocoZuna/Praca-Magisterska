@@ -9,7 +9,7 @@ from scipy.fft import rfft, rfftfreq
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "Idle\\ReadImu.csv"
+PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
 
 try:
     dataset = open(PathToFile,'r').readlines()

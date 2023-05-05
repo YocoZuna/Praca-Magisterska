@@ -8,19 +8,13 @@ import numpy as np
 import math
 import cv2 as cv
 from scipy import signal as sp 
-#importing data set
-#dataset = open("test.csv",'r').read()
-first_sample = 1280
+
+
+
 lista = [ ]
 listsize = 0
-t = []
-ax=[]
-ay = []
-az = []
-x = []
-y = []
-z = []
 PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
+
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
@@ -34,7 +28,6 @@ for i in range(0,(int(listsize/128))):
     lista.append(temp)
     temp = temp +128
 
-i = 0
 
 
 lenth = len(lista)
@@ -48,12 +41,19 @@ while iterration <= lenth:
     except:
         break
     
-    #lines = dataset.split("\n")
     iterration+=1
     lines = dataset
     
+    t = []
+    ax=[]
+    ay = []
+    az = []
+    x = []
+    y = []
+    z = []
 
 
+    """Gadering data and calibration of IMU"""
     for line in lines:
         if len(line) > 1:
             
@@ -69,24 +69,29 @@ while iterration <= lenth:
 
 
 
+
+    """SDFT"""
+
     window_length = 128;
-    window = np.hamming(window_length);
-    signal = [ax,ay,az,x,y,z]
+    window = np.blackman(window_length);
+
     fs = 200
-    for i in signal:
-        #window = np.kaiser(window_length,5);
-        overlap = math.floor(window_length*0.5-1);
-        fft_length = window_length*2;
-        stft_frequency, stft_time, signal_stft = sp.stft(i,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
-        signal_stft = signal_stft[0:window_length-1,:];
-        stft_frequency = stft_frequency[0:window_length-1];
-        signal_stft_abs = abs(signal_stft);
+    plt.figure();
+    signal  =ay
+    window = np.kaiser(window_length,3);
+    overlap = math.floor(window_length-1);
+    fft_length = window_length*2;
+    stft_frequency, stft_time, signal_stft = sp.stft(az,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
+    signal_stft = signal_stft[0:window_length-1,:];
+    stft_frequency = stft_frequency[0:window_length-1];
+    signal_stft_abs = abs(signal_stft);
 
-
-        plt.figure();
-        plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
-        plt.ylabel('Frequency (Hz)');
-        plt.xlabel('Time (s)');
-
-        plt.show()
+ 
+    
+    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+    #plt.ylabel('Frequency (Hz)');
+    #plt.xlabel('Time (s)');
+    plt.axis('off')
+plt.show()
+        
 
