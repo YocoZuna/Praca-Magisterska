@@ -77,7 +77,7 @@ while iterration <= lenth:
 
     fs = 200
     plt.figure();
-    signal  =ay
+    signal = ay
     window = np.kaiser(window_length,3);
     overlap = math.floor(window_length-1);
     fft_length = window_length*2;
@@ -86,12 +86,13 @@ while iterration <= lenth:
     stft_frequency = stft_frequency[0:window_length-1];
     signal_stft_abs = abs(signal_stft);
 
- 
     
-    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+
+    plt.pcolor(stft_time, stft_frequency, signal_stft_abs, shading='nearest',cmap='Greys');
     #plt.ylabel('Frequency (Hz)');
     #plt.xlabel('Time (s)');
+    
     plt.axis('off')
-plt.show()
+    plt.show()
         
 
