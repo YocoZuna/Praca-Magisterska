@@ -39,14 +39,15 @@ class ST_F411:
         param2: buffor with data that arrived on portCom
         description: Read from portCOM and store the data in CSV file 
         """
-        self.buffor = buffor
+        
         
         self.sample  =0
+        self.buffor=self.ST_F411.write('s'.encode('ascii'))
         while(self.ST_F411.readable()):
             self.file = open(filePath,'a+')
             self.buffor=self.ST_F411.readline().decode('ascii')
             self.sample =  self.sample+1
-            self.file.write(f"{self.sample},{self.buffor}")
+            self.file.write(f"{self.buffor}")
 
     def ST_F411_DeInit(self):
         """
@@ -55,5 +56,6 @@ class ST_F411:
         param: None
         description: deinitialize ST_F411 controler and close portCOM
         """
+        self.buffor=self.ST_F411.write('e'.encode('ascii'))
         self.ST_F411.close()
 

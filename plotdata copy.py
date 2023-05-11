@@ -6,7 +6,7 @@ from sklearn.impute import SimpleImputer
 #dataset = open("test.csv",'r').read()
 lista = [ ]
 listsize = 0
-PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
+PathToFile = "ReadImu.csv"
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
@@ -20,14 +20,19 @@ for i in range(0,(int(listsize/128))):
     lista.append(temp)
     temp = temp +128
 
-i = 0
-while i <= listsize:
+lenth = len(lista)
+iterration= 0
+while iterration <= lenth:
     try:
-        dataset = open(PathToFile ,'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open(PathToFile,'r').readlines()
+        temp1 = lista[iterration]
+        temp2 = lista[iterration+1]
+        dataset = dataset[temp1:temp2]
     except:
         break
+    
     #lines = dataset.split("\n")
-    i+=1
+    iterration+=1
     lines = dataset
     t = []
     ax=[]
