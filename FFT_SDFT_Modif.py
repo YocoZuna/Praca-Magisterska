@@ -13,21 +13,20 @@ count = 0
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "ReadImu.csv"
-#PathToFile = "ReadImu.csv"
-
-dataset = open(PathToFile,'r').readlines()   
 temp = 0
-for i in dataset:
-    if i == '\n':
-        dataset.remove('\n')
-print(len(dataset))
+
+PathToFile = "ReadImu_Ok.csv"
+buffor= [ ]
 try:
- 
+    dataset = open(PathToFile,'r').readline()
     listsize = len(dataset)
-    print(listsize)
+    
+
 except:
     print("Could not open CSV file\n")
+
+
+buffor = dataset.split(',')
 
 for i in range(0,(int(listsize/256))):
     
@@ -42,7 +41,7 @@ while iterration <= lenth:
        
         temp1 = lista[iterration]
         temp2 = lista[iterration+1]
-        datasett = dataset[temp1:temp2]
+        datasett = buffor[temp1:temp2]
     except:
         break
     
@@ -60,10 +59,11 @@ while iterration <= lenth:
 
 
 
+
     for line in lines:
         if len(line) > 1:
-            
-            sample,aax,aay,aaz,xx,yy,zz = line.split(',')
+            line = line[2:-4]
+            sample,aax,aay,aaz,xx,yy,zz = line.split(';')
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
             ay.append(float(aay)+0.0477295)
@@ -82,13 +82,13 @@ while iterration <= lenth:
             
        
     axyfft = rfft(gx)
-    axfft = rfftfreq(len(gx), 1/400)
+    axfft = rfftfreq(len(gx), 1/500)
 
     ayyfft = rfft(gy)
-    ayfft = rfftfreq(len(gy), 1/400)
+    ayfft = rfftfreq(len(gy), 1/500)
 
     azyfft = rfft(gz)
-    azfft = rfftfreq(len(gz), 1/400)
+    azfft = rfftfreq(len(gz), 1/500)
    
     """    fft = [ax,ay,az] 
 
@@ -128,7 +128,7 @@ while iterration <= lenth:
     window_length = 256;
     window = np.hamming(window_length);
     signal = gy
-    fs = 200
+    fs = 500
 
 
     #window = np.kaiser(window_length,5);
@@ -139,8 +139,42 @@ while iterration <= lenth:
     stft_frequency = stft_frequency[0:window_length-1];
     signal_stft_abs = abs(signal_stft);
 
-
     plt.figure(2);
+    plt.title('Gy')
+    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+
+    signal = gz
+    fs = 500
+
+
+    #window = np.kaiser(window_length,5);
+    overlap = math.floor(window_length-1);
+    fft_length = window_length*2;
+    stft_frequency, stft_time, signal_stft = sp.stft(signal,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
+    signal_stft = signal_stft[0:window_length-1,:];
+    stft_frequency = stft_frequency[0:window_length-1];
+    signal_stft_abs = abs(signal_stft);
+
+    plt.figure(3);
+    plt.title('Gz')
+    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+
+
+        
+    signal = gx
+    fs = 500
+
+
+    #window = np.kaiser(window_length,5);
+    overlap = math.floor(window_length-1);
+    fft_length = window_length*2;
+    stft_frequency, stft_time, signal_stft = sp.stft(signal,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
+    signal_stft = signal_stft[0:window_length-1,:];
+    stft_frequency = stft_frequency[0:window_length-1];
+    signal_stft_abs = abs(signal_stft);
+
+    plt.figure(4);
+    plt.title('Gx')
     plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
     
     plt.ylabel('Frequency (Hz)');
@@ -148,3 +182,7 @@ while iterration <= lenth:
     plt.show()
     plt.figure(1).clear()
     plt.figure(2).clear()
+    plt.figure(3).clear()
+    plt.figure(4).clear()
+
+

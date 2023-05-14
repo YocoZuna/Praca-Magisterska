@@ -12,12 +12,12 @@ class ST_F411:
     param2: specify baudrate of communication 
     description: Initlialize motor according to STM Motor SDK 6.1 ASEP protocol
     """
-    def __init__(self, portCOM, baudrate):
+    def __init__(self, portCOM, baudrate,buffor):
         self.portCOM = portCOM
         self.baudrate = baudrate
         self.sample = 0
         self.ST_F411  = serial.Serial(port=self.portCOM ,baudrate=self.baudrate)
-
+        self.bufforr =buffor
 
     
     def ST_F411_Close_File(self,file):
@@ -30,7 +30,7 @@ class ST_F411:
        
         self.temp = file.close()
 
-    def ST_F411_Read_IMU(self,filePath,buffor):
+    def ST_F411_Read_IMU(self,filePath):
 
         """
         ST_F411_Read_IMU(param1,param2)
@@ -46,8 +46,14 @@ class ST_F411:
         while(self.ST_F411.readable()):
             self.file = open(filePath,'a+')
             self.buffor=self.ST_F411.readline().decode('ascii')
-            self.sample =  self.sample+1
-            self.file.write(f"{self.buffor}")
+            self.sample = self.sample+1
+            self.bufforr.append(self.buffor)
+            #print(self.bufforr)
+            #self.file.write(f"{self.buffor}")
+            if self.sample == 2000:
+                self.file.write(f"{self.bufforr}")
+                self.ST_F411_DeInit()
+                break
 
     def ST_F411_DeInit(self):
         """

@@ -7,33 +7,47 @@ from sklearn.impute import SimpleImputer
 lista = [ ]
 listsize = 0
 PathToFile = "ReadImu.csv"
+buffor= [ ]
 try:
-    dataset = open(PathToFile,'r').readlines()
+    dataset = open(PathToFile,'r').readline()
     listsize = len(dataset)
     print(listsize)
 except:
     print("Could not open CSV file\n")
     
+
+buffor = dataset.split(',')
+
 temp = 0
+
+
+
+
+
+
 for i in range(0,(int(listsize/128))):
     
     lista.append(temp)
     temp = temp +128
 
+
 lenth = len(lista)
 iterration= 0
+
+
+
 while iterration <= lenth:
     try:
         dataset = open(PathToFile,'r').readlines()
         temp1 = lista[iterration]
         temp2 = lista[iterration+1]
-        dataset = dataset[temp1:temp2]
+        datasett = buffor[temp1:temp2]
     except:
-        break
+        pass
     
     #lines = dataset.split("\n")
     iterration+=1
-    lines = dataset
+    lines = datasett
     t = []
     ax=[]
     ay = []
@@ -48,7 +62,8 @@ while iterration <= lenth:
     for line in lines:
         if len(line) > 1:
             
-            sample,aax,aay,aaz,xx,yy,zz = line.split(',')
+            line = line[2:-4]
+            sample,aax,aay,aaz,xx,yy,zz = line.split(';')
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
             ay.append(float(aay)+0.0477295)
@@ -82,7 +97,7 @@ while iterration <= lenth:
     plt.plot(t, y)
     plt.plot(t, z)
     plt.legend(['Gx','Gy','Gz'])
-    plt.ylim(-5,5)
+
     plt.xlabel("Sample number")
     plt.ylabel("Readed value")
     #plt.savefig(f"Gyro\\{i}.png")

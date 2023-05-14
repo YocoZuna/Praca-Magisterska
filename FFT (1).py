@@ -19,6 +19,12 @@ except:
     print("Could not open CSV file\n")
     
 temp = 0
+
+for i in dataset:
+    if i == '\n':
+        dataset.remove('\n') 
+
+
 for i in range(0,(int(listsize/128))):
     
     lista.append(temp)
@@ -69,13 +75,13 @@ while iterration <= lenth:
 
 
         axyfft = rfft(x)
-        axfft = rfftfreq(len(x), 1/200)
+        axfft = rfftfreq(len(x), 1/500)
 
         ayyfft = rfft(y)
-        ayfft = rfftfreq(len(y), 1/200)
+        ayfft = rfftfreq(len(y), 1/500)
 
         azyfft = rfft(az)
-        azfft = rfftfreq(len(z), 1/200)
+        azfft = rfftfreq(len(z), 1/500)
 
 
 
@@ -91,7 +97,7 @@ while iterration <= lenth:
 
     #plt.figure(1).clear()
 
-plt.show()   
+    plt.show()   
 
 
  
