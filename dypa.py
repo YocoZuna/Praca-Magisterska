@@ -4,7 +4,6 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 #importing data set
 #dataset = open("test.csv",'r').read()
-#CHUJ
 lista = [ ]
 listsize = 0
 PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
