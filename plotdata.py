@@ -2,13 +2,36 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd 
 from sklearn.impute import SimpleImputer
+import MovingAvrgFilter
 #importing data set
 #dataset = open("test.csv",'r').read()
-lista = [0,128,256,384,512,640,768,896]
+#importing data set
+#dataset = open("test.csv",'r').read()
+first_sample = 1280
+lista = [ ]
+listsize = 0
+PathToFile = "ReadImu_9600.csv"
 
-import os 
+MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
+
+
+#PathToFile = "ReadImu.csv"
+try:
+    dataset = open(PathToFile,'r').readlines()
+    listsize = len(dataset)
+    print(listsize)
+except:
+    print("Could not open CSV file\n")
+    
+temp = 0
+for i in range(0,(int(listsize/256))):
+    
+    lista.append(temp)
+    temp = temp +256
+
+
+
 lenth = len(lista)
-
 iterration= 0
 while iterration <= lenth:
     try:
@@ -22,8 +45,10 @@ while iterration <= lenth:
     #lines = dataset.split("\n")
     iterration+=1
     lines = dataset
+    
     t = []
     ax=[]
+    max = []
     ay = []
     az = []
     x = []
@@ -43,7 +68,8 @@ while iterration <= lenth:
             x.append(float(xx)+4.5992367)
             y.append(float(yy)+43.36626)
             z.append(float(zz)-1.5074805)
-       
+        
+
 
 
 
@@ -78,13 +104,12 @@ while iterration <= lenth:
         plt.ylim(-1,1)
     """
 
-    plt.figure()
-    plt.plot(t, x,'r')
-    plt.plot(t, y,'g')
-    plt.plot(t, z)
+    plt.figure(1)
+    plt.plot(t, y,'.-')
+
  
-    plt.ylim(-17,17)
+    #plt.ylim(-17,17)
     
 #os.remove("C:\\Users\\dawid\\Desktop\\Python\\test.csv")
-plt.show()
+    plt.show()
 # Creating vectors X and Y where Y is predicted value X input values  

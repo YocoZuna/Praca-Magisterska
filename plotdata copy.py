@@ -6,29 +6,48 @@ from sklearn.impute import SimpleImputer
 #dataset = open("test.csv",'r').read()
 lista = [ ]
 listsize = 0
-PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
+PathToFile = "ReadImu.csv"
+buffor= [ ]
 try:
-    dataset = open(PathToFile,'r').readlines()
+    dataset = open(PathToFile,'r').readline()
     listsize = len(dataset)
     print(listsize)
 except:
     print("Could not open CSV file\n")
     
+
+buffor = dataset.split(',')
+
 temp = 0
+
+
+
+
+
+
 for i in range(0,(int(listsize/128))):
     
     lista.append(temp)
     temp = temp +128
 
-i = 0
-while i <= listsize:
+
+lenth = len(lista)
+iterration= 0
+
+
+
+while iterration <= lenth:
     try:
-        dataset = open(PathToFile ,'r').readlines()[lista[i]:lista[i+1]]
+        dataset = open(PathToFile,'r').readlines()
+        temp1 = lista[iterration]
+        temp2 = lista[iterration+1]
+        datasett = buffor[temp1:temp2]
     except:
-        break
+        pass
+    
     #lines = dataset.split("\n")
-    i+=1
-    lines = dataset
+    iterration+=1
+    lines = datasett
     t = []
     ax=[]
     ay = []
@@ -43,7 +62,8 @@ while i <= listsize:
     for line in lines:
         if len(line) > 1:
             
-            sample,aax,aay,aaz,xx,yy,zz = line.split(',')
+            line = line[2:-4]
+            sample,aax,aay,aaz,xx,yy,zz = line.split(';')
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
             ay.append(float(aay)+0.0477295)
@@ -77,7 +97,7 @@ while i <= listsize:
     plt.plot(t, y)
     plt.plot(t, z)
     plt.legend(['Gx','Gy','Gz'])
-    plt.ylim(-5,5)
+
     plt.xlabel("Sample number")
     plt.ylabel("Readed value")
     #plt.savefig(f"Gyro\\{i}.png")

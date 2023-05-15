@@ -12,12 +12,12 @@ class ST_F411:
     param2: specify baudrate of communication 
     description: Initlialize motor according to STM Motor SDK 6.1 ASEP protocol
     """
-    def __init__(self, portCOM, baudrate):
+    def __init__(self, portCOM, baudrate,buffor):
         self.portCOM = portCOM
         self.baudrate = baudrate
         self.sample = 0
         self.ST_F411  = serial.Serial(port=self.portCOM ,baudrate=self.baudrate)
-
+        self.bufforr =buffor
 
     
     def ST_F411_Close_File(self,file):
@@ -30,7 +30,7 @@ class ST_F411:
        
         self.temp = file.close()
 
-    def ST_F411_Read_IMU(self,filePath,buffor):
+    def ST_F411_Read_IMU(self,filePath):
 
         """
         ST_F411_Read_IMU(param1,param2)
@@ -39,14 +39,21 @@ class ST_F411:
         param2: buffor with data that arrived on portCom
         description: Read from portCOM and store the data in CSV file 
         """
-        self.buffor = buffor
+        
         
         self.sample  =0
+        self.buffor=self.ST_F411.write('s'.encode('ascii'))
         while(self.ST_F411.readable()):
             self.file = open(filePath,'a+')
             self.buffor=self.ST_F411.readline().decode('ascii')
-            self.sample =  self.sample+1
-            self.file.write(f"{self.sample},{self.buffor}")
+            self.sample = self.sample+1
+            self.bufforr.append(self.buffor)
+            #print(self.bufforr)
+            #self.file.write(f"{self.buffor}")
+            if self.sample == 2000:
+                self.file.write(f"{self.bufforr}")
+                self.ST_F411_DeInit()
+                break
 
     def ST_F411_DeInit(self):
         """
@@ -55,5 +62,6 @@ class ST_F411:
         param: None
         description: deinitialize ST_F411 controler and close portCOM
         """
+        self.buffor=self.ST_F411.write('e'.encode('ascii'))
         self.ST_F411.close()
 

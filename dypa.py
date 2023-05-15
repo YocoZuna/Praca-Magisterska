@@ -2,15 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd 
 from sklearn.impute import SimpleImputer
-import os 
-from scipy.fft import rfft, rfftfreq
 #importing data set
 #dataset = open("test.csv",'r').read()
-first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "ReadImu.csv"
-
+PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
@@ -19,18 +15,10 @@ except:
     print("Could not open CSV file\n")
     
 temp = 0
-
-for i in dataset:
-    if i == '\n':
-        dataset.remove('\n') 
-
-
 for i in range(0,(int(listsize/128))):
     
     lista.append(temp)
     temp = temp +128
-
-
 
 lenth = len(lista)
 iterration= 0
@@ -46,7 +34,6 @@ while iterration <= lenth:
     #lines = dataset.split("\n")
     iterration+=1
     lines = dataset
-    
     t = []
     ax=[]
     ay = []
@@ -55,6 +42,7 @@ while iterration <= lenth:
     y = []
     z = []
 
+    # Initialise the subplot function using number of rows and columns
 
 
     for line in lines:
@@ -74,30 +62,37 @@ while iterration <= lenth:
 
 
 
-        axyfft = rfft(x)
-        axfft = rfftfreq(len(x), 1/500)
 
-        ayyfft = rfft(y)
-        ayfft = rfftfreq(len(y), 1/500)
-
-        azyfft = rfft(az)
-        azfft = rfftfreq(len(z), 1/500)
-
-
-
-
-        plt.figure(1)
-        plt.title("Acc")
-        plt.plot(axfft, np.abs(axyfft))
-        plt.plot(ayfft, np.abs(ayyfft))
-        plt.plot(azfft, np.abs(azyfft))
-        plt.legend(['Ax','Ay','Az'])
-  
-
-
-    #plt.figure(1).clear()
-
-    plt.show()   
-
-
+    # For Sine Function
+   
+    plt.figure(1)
+    plt.title("Acc")
+    plt.plot(t, ax)
+    plt.plot(t, ay)
+    plt.plot(t, az)
+    plt.legend(['Ax','Ay','Az'])
+    plt.xlabel("Sample number")
+    plt.ylabel("Readed value")
+    plt.ylim(-5,5)
+    #plt.savefig(f"Acc\\{i}.png")
+    
+    plt.figure(2)
+    plt.title("Gyro")
+    plt.plot(t, x)
+    plt.plot(t, y)
+    plt.plot(t, z)
+    plt.legend(['Gx','Gy','Gz'])
+    plt.ylim(-5,5)
+    plt.xlabel("Sample number")
+    plt.ylabel("Readed value")
+    #plt.savefig(f"Gyro\\{i}.png")
+    plt.show() 
+    plt.figure(1).clear()
+    plt.figure(2).clear()
+    
+    #plt.savefig('my_plot.png')
  
+
+
+
+# Creating vectors X and Y where Y is predicted value X input values  
