@@ -7,6 +7,7 @@ import math
 import os 
 from scipy.fft import rfft, rfftfreq
 import MovingAvrgFilter
+from colormap import Colormap
 MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
 count = 0
 #importing data set
@@ -15,6 +16,11 @@ first_sample = 1280
 lista = [ ]
 listsize = 0
 temp = 0
+
+cm = Colormap()
+my_cmap_red = cm.cmap_bicolor('black', 'red')
+my_cmap_green = cm.cmap_bicolor('black', 'green')
+my_cmap_blue = cm.cmap_bicolor('black', 'blue')
 
 PathToFile = "ReadImu.csv"
 buffor= [ ]
@@ -143,7 +149,8 @@ while iterration <= lenth:
 
     plt.figure(2);
     plt.title('Gy')
-    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+    figure_STFT_Gy = plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest', cmap = my_cmap_green);
+    plt.colorbar(figure_STFT_Gy)
 
     signal = gz
     fs = 500
@@ -159,8 +166,8 @@ while iterration <= lenth:
 
     plt.figure(3);
     plt.title('Gz')
-    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
-
+    figure_STFT_Gz = plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest', cmap = my_cmap_blue);
+    plt.colorbar(figure_STFT_Gz)
 
         
     signal = gx
@@ -177,8 +184,9 @@ while iterration <= lenth:
 
     plt.figure(4);
     plt.title('Gx')
-    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
-    
+    figure_STFT_Gx = plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest', cmap = my_cmap_red);
+    plt.colorbar(figure_STFT_Gx)
+
     plt.ylabel('Frequency (Hz)');
     plt.xlabel('Time (s)');
     plt.show()
