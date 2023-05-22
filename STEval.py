@@ -19,12 +19,16 @@ class ST_EVal:
         """
         self.stEVAL_CMD = {
             "START" : bytearray(b')\x00\x00\xe0\x19\x00'),
+            
             "STOP" : bytearray(b')\x00\x00\xe0\x21\x00'),
             "FAULTACK" : bytearray(b')\x00\x00\xe0\x39\x00'),
             
             "PING" : bytearray(b'\x06\x00\x00`'),
             "BEACON" : bytearray(b'\x05\xc3\x00`'),
 
+            "READ_REGISTER" : bytearray(b'\x49\x00\x00\x70\x11\x00'),
+            "READ_ALL_REGISTERS" : bytearray(b'\xc9\x04\x00\xe0\x11\x00\x19\x00Y\x00Y\x1b\x99\x00\xd9\x00\x19\x01\x91\t\x91\x02\xd1\x02Q\t\x91\x01\xd1\x01\x91\x14Q\x14\x91\x00\xd1\x00\x11\t\xd1\x08\xd1\x05\x91\x05\xd1\x07\x11\x08Q\x03\x91\x03\x91\x04Q\x04\x11\x19\xd1\x18\x91\x0bQ\x0b\xd1\x0b\x11\x0cQ\x0c\x91\x0cI\x00\x89\x00\xc9\x00')
+                                                                        
         }
 
 
@@ -95,5 +99,14 @@ class ST_EVal:
         self.temp.append(self.lower)
         self.STEval.write(self.header+self.temp+self.tail)
         time.sleep(1/10)
+
+    def ST_Eval_ReadRegister(self,register):
+        
+
+   
+   
+        self.STEval.write(self.stEVAL_CMD["READ_ALL_REGISTERS"])
+        self.buffor = self.STEval.read(80)
+        print(self.buffor)
 
 

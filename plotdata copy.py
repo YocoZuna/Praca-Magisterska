@@ -33,6 +33,13 @@ for i in range(0,(int(listsize/128))):
 
 lenth = len(lista)
 iterration= 0
+t = []
+ax=[]
+ay = []
+az = []
+x = []
+y = []
+z = []
 
 
 
@@ -48,13 +55,6 @@ while iterration <= lenth:
     #lines = dataset.split("\n")
     iterration+=1
     lines = datasett
-    t = []
-    ax=[]
-    ay = []
-    az = []
-    x = []
-    y = []
-    z = []
 
     # Initialise the subplot function using number of rows and columns
 
@@ -80,7 +80,7 @@ while iterration <= lenth:
 
     # For Sine Function
    
-    plt.figure(1)
+"""    plt.figure(1)
     plt.title("Acc")
     plt.plot(t, ax)
     plt.plot(t, ay)
@@ -103,11 +103,12 @@ while iterration <= lenth:
     #plt.savefig(f"Gyro\\{i}.png")
     plt.show() 
     plt.figure(1).clear()
-    plt.figure(2).clear()
+    plt.figure(2).clear()"""
     
     #plt.savefig('my_plot.png')
  
-
-
+plt.figure(3)
+plt.plot(t,ax)
+plt.show()
 
 # Creating vectors X and Y where Y is predicted value X input values  

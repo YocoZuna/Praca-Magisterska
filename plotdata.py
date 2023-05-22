@@ -10,7 +10,7 @@ import MovingAvrgFilter
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "ReadImu_9600.csv"
+PathToFile = "PomairPradu.csv"
 
 MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
 
@@ -54,12 +54,14 @@ while iterration <= lenth:
     x = []
     y = []
     z = []
-
+    pa = []
+    pb =[]
+    pc = []
 
     for line in lines:
         if len(line) > 1:
             
-            sample,aax,aay,aaz,xx,yy,zz = line.split(',')
+            sample,aax,aay,aaz,xx,yy,zz,phasea,phaseb,phasec = line.split(';')
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
             ay.append(float(aay)+0.0477295)
@@ -68,6 +70,10 @@ while iterration <= lenth:
             x.append(float(xx)+4.5992367)
             y.append(float(yy)+43.36626)
             z.append(float(zz)-1.5074805)
+            
+            pa.append(float(phasea))
+            pb.append(float(phaseb))
+            pc.append(float(phaseb))
         
 
 
@@ -105,7 +111,9 @@ while iterration <= lenth:
     """
 
     plt.figure(1)
-    plt.plot(t, y,'.-')
+    plt.plot(t, pb,'.-')
+    plt.plot(t, pa,'.-')
+
 
  
     #plt.ylim(-17,17)
