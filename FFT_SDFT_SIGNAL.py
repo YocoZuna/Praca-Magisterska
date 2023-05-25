@@ -13,7 +13,7 @@ count = 0
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "ReadImu.csv"
+PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
 #PathToFile = "ReadImu.csv"
 
 dataset = open(PathToFile,'r').readlines()   
