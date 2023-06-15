@@ -8,22 +8,13 @@ import numpy as np
 import math
 import cv2 as cv
 from scipy import signal as sp 
-import MovingAvrgFilter
-MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
-#importing data set
-#dataset = open("test.csv",'r').read()
-first_sample = 1280
+
+
 
 lista = [ ]
 listsize = 0
-t = []
-ax=[]
-ay = []
-az = []
-x = []
-y = []
-z = []
-PathToFile = "ReadImu.csv"
+PathToFile = "Run_With_Broke_Prop\\ReadImu.csv"
+
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
@@ -32,12 +23,11 @@ except:
     print("Could not open CSV file\n")
     
 temp = 0
-for i in range(0,(int(listsize/256))):
+for i in range(0,(int(listsize/128))):
     
     lista.append(temp)
-    temp = temp +256
+    temp = temp +128
 
-i = 0
 
 
 lenth = len(lista)
@@ -51,39 +41,58 @@ while iterration <= lenth:
     except:
         break
     
-    #lines = dataset.split("\n")
     iterration+=1
     lines = dataset
     
+    t = []
+    ax=[]
+    ay = []
+    az = []
+    x = []
+    y = []
+    z = []
 
 
+    """Gadering data and calibration of IMU"""
     for line in lines:
         if len(line) > 1:
             
             sample,aax,aay,aaz,xx,yy,zz = line.split(',')
-            t.append(MovingAvr.Filter_Fill(float(sample)))
-            ax.append(MovingAvr.Filter_Fill(float(aax)-0.1044676))
-            ay.append(MovingAvr.Filter_Fill(float(aay)+0.0477295))
-            az.append(MovingAvr.Filter_Fill(float(aaz)-0.9561013))
+            t.append(float(sample))
+            ax.append(float(aax)-0.1044676)
+            ay.append(float(aay)+0.0477295)
+            az.append(float(aaz)-0.9561013)
 
-            x.append(MovingAvr.Filter_Fill(float(xx)+4.5992367))
-            y.append(MovingAvr.Filter_Fill(float(yy)+43.36626))
-            z.append(MovingAvr.Filter_Fill(float(zz)-1.5074805))
+            x.append(float(xx)+4.5992367)
+            y.append(float(yy)+43.36626)
+            z.append(float(zz)-1.5074805)
 
 
 
-    window_length = 256;
-    window = np.hamming(window_length);
-    signal = [ax,ay,az,x,y,z]
+
+    """SDFT"""
+
+    window_length = 128;
+    window = np.blackman(window_length);
+
     fs = 200
-    for i in signal:
-        #window = np.kaiser(window_length,5);
-        overlap = math.floor(window_length-1);
-        fft_length = window_length*2;
-        stft_frequency, stft_time, signal_stft = sp.stft(i,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
-        signal_stft = signal_stft[0:window_length-1,:];
-        stft_frequency = stft_frequency[0:window_length-1];
-        signal_stft_abs = abs(signal_stft);
+    plt.figure();
+    signal = ay
+    window = np.kaiser(window_length,3);
+    overlap = math.floor(window_length-1);
+    fft_length = window_length*2;
+    stft_frequency, stft_time, signal_stft = sp.stft(az,fs=fs,window=window,nperseg=window_length,noverlap=overlap,nfft=fft_length,return_onesided=False);
+    signal_stft = signal_stft[0:window_length-1,:];
+    stft_frequency = stft_frequency[0:window_length-1];
+    signal_stft_abs = abs(signal_stft);
 
+    
 
+    plt.pcolor(stft_time, stft_frequency, signal_stft_abs, shading='nearest',cmap='Greys');
+    #plt.ylabel('Frequency (Hz)');
+    #plt.xlabel('Time (s)');
+    
+    plt.axis('off')
+    plt.show()
+        
 
