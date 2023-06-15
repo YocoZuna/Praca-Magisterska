@@ -10,7 +10,7 @@ import MovingAvrgFilter
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "PomairPradu.csv"
+PathToFile = "TestMQTTServerS.txt"
 
 MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
 
@@ -19,15 +19,15 @@ MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
-    print(listsize)
+
 except:
     print("Could not open CSV file\n")
     
 temp = 0
-for i in range(0,(int(listsize/256))):
+for i in range(0,(int(listsize/1))):
     
     lista.append(temp)
-    temp = temp +256
+    temp = temp +1
 
 
 
@@ -60,8 +60,9 @@ while iterration <= lenth:
 
     for line in lines:
         if len(line) > 1:
-            
-            sample,aax,aay,aaz,xx,yy,zz,phasea,phaseb,phasec = line.split(';')
+            line = line[3:len(line)-3]
+          
+            sample,aax,aay,aaz,xx,yy,zz,phasea,phaseb,phasec = line.split(',')
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
             ay.append(float(aay)+0.0477295)
@@ -73,7 +74,7 @@ while iterration <= lenth:
             
             pa.append(float(phasea))
             pb.append(float(phaseb))
-            pc.append(float(phaseb))
+            pc.append(float(phasec))
         
 
 
@@ -111,13 +112,16 @@ while iterration <= lenth:
     """
 
     plt.figure(1)
-    plt.plot(t, pb,'.-')
-    plt.plot(t, pa,'.-')
+    plt.plot(t, pa,'r')
+
+    #plt.plot(t,y,'b')
+    #plt.plot(t,z,'g')
+    plt.show()
 
 
  
     #plt.ylim(-17,17)
     
 #os.remove("C:\\Users\\dawid\\Desktop\\Python\\test.csv")
-    plt.show()
+  
 # Creating vectors X and Y where Y is predicted value X input values  
