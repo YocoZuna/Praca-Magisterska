@@ -9,7 +9,7 @@ from scipy.fft import rfft, rfftfreq
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "ReadImu.csv"
+PathToFile = "FTTYSD.txt"
 
 try:
     dataset = open(PathToFile,'r').readlines()
@@ -25,15 +25,15 @@ for i in dataset:
         dataset.remove('\n') 
 
 
-for i in range(0,(int(listsize/128))):
+for i in range(0,(int(listsize/255))):
     
     lista.append(temp)
-    temp = temp +128
+    temp = temp +255
 
 
 
 lenth = len(lista)
-iterration= 0
+"""iterration= 0
 while iterration <= lenth:
     try:
         dataset = open(PathToFile,'r').readlines()
@@ -44,60 +44,64 @@ while iterration <= lenth:
         break
     
     #lines = dataset.split("\n")
-    iterration+=1
-    lines = dataset
+    iterration+=1"""
+lines = dataset
     
-    t = []
-    ax=[]
-    ay = []
-    az = []
-    x = []
-    y = []
-    z = []
+t = []
+ax=[]
+ay = []
+az = []
+x = []
+y = []
+z = []
+ia = []
+ib = []
+ic = []
 
 
+for line in lines:
+    if len(line) > 1:
+        
+        sample,aax,aay,aaz,xx,yy,zz,aa,bb,cc = line.split(';')
+        t.append(float(sample))
+        ax.append(float(aax)-0.1044676)
+        ay.append(float(aay)+0.0477295)
+        az.append(float(aaz)-0.9561013)
 
-    for line in lines:
-        if len(line) > 1:
-            
-            sample,aax,aay,aaz,xx,yy,zz = line.split(',')
-            t.append(float(sample))
-            ax.append(float(aax)-0.1044676)
-            ay.append(float(aay)+0.0477295)
-            az.append(float(aaz)-0.9561013)
-
-            x.append(float(xx)+4.5992367)
-            y.append(float(yy)+43.36626)
-            z.append(float(zz)-1.5074805)
-
-
-
-
-
-        axyfft = rfft(x)
-        axfft = rfftfreq(len(x), 1/500)
-
-        ayyfft = rfft(y)
-        ayfft = rfftfreq(len(y), 1/500)
-
-        azyfft = rfft(az)
-        azfft = rfftfreq(len(z), 1/500)
+        x.append(float(xx)+4.5992367)
+        y.append(float(yy)+43.36626)
+        z.append(float(zz)-1.5074805)
+        ia.append(aa)
+        ib.append(bb)
+        ic.append(cc)
 
 
 
 
-        plt.figure(1)
-        plt.title("Acc")
-        plt.plot(axfft, np.abs(axyfft))
-        plt.plot(ayfft, np.abs(ayyfft))
-        plt.plot(azfft, np.abs(azyfft))
-        plt.legend(['Ax','Ay','Az'])
-  
+axyfft = rfft(ia)
+axfft = rfftfreq(len(ia), 1/500)
+
+ayyfft = rfft(ib)
+ayfft = rfftfreq(len(ib), 1/500)
+
+azyfft = rfft(ic)
+azfft = rfftfreq(len(ic), 1/500)
 
 
-    #plt.figure(1).clear()
 
-    plt.show()   
+
+plt.figure(1)
+plt.title("Current FFT")
+plt.plot(axfft, np.abs(axyfft))
+plt.plot(ayfft, np.abs(ayyfft))
+plt.plot(azfft, np.abs(azyfft))
+plt.legend(['Ia','Ib','Ic'])
+
+
+
+#plt.figure(1).clear()
+
+plt.show()   
 
 
  

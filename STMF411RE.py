@@ -1,6 +1,6 @@
 import serial 
 import time
-
+import paho.mqtt.client as mqtt 
 
 
 
@@ -18,7 +18,9 @@ class ST_F411:
         self.sample = 0
         self.ST_F411  = serial.Serial(port=self.portCOM ,baudrate=self.baudrate)
         self.bufforr =buffor
-
+        self.mqttBroker ="mqtt.eclipseprojects.io" 
+        self.client = mqtt.Client("IMU")
+        self.client.connect(self.mqttBroker) 
     
     def ST_F411_Close_File(self,file):
         """
@@ -48,13 +50,11 @@ class ST_F411:
             self.buffor=self.ST_F411.readline().decode('ascii')
             self.sample = self.sample+1
             self.bufforr.append(self.buffor)
-            #print(self.bufforr)
-            #self.file.write(f"{self.buffor}")
-            if self.sample == 2000:
-                self.file.write(f"{self.bufforr}")
-                self.ST_F411_DeInit()
-                break
 
+            if self.sample == 256:
+                self.sample =0
+                self.client.publish("IMU", str(self.bufforr))
+                self.bufforr = []
     def ST_F411_DeInit(self):
         """
         STEval_DeInit()

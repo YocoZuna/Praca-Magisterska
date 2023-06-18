@@ -27,8 +27,8 @@ except:
     print("Could not open CSV file\n")
 
 
-buffor = dataset.split(',')
 
+buffor = dataset.split(',')
 for i in range(0,(int(listsize/256))):
     
     lista.append(temp)
@@ -62,9 +62,11 @@ while iterration <= lenth:
 
 
     for line in lines:
+        file = open("EdgeImpulse.txt",'a+')
         if len(line) > 1:
             line = line[2:-4]
             sample,aax,aay,aaz,xx,yy,zz = line.split(';')
+            file.write(f"{sample},{aax}\n")
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
             ay.append(float(aay)+0.0477295)
@@ -82,14 +84,14 @@ while iterration <= lenth:
             """FFT"""
             
        
-    axyfft = rfft(gx)
-    axfft = rfftfreq(len(gx), 1/500)
+    axyfft = rfft(ax)
+    axfft = rfftfreq(len(ax), 1/500)
 
-    ayyfft = rfft(gy)
-    ayfft = rfftfreq(len(gy), 1/500)
+    ayyfft = rfft(ay)
+    ayfft = rfftfreq(len(ay), 1/500)
 
-    azyfft = rfft(gz)
-    azfft = rfftfreq(len(gz), 1/500)
+    azyfft = rfft(az)
+    azfft = rfftfreq(len(az), 1/500)
    
     """    fft = [ax,ay,az] 
 
@@ -128,7 +130,7 @@ while iterration <= lenth:
 
     window_length = 256;
     window = np.hamming(window_length);
-    signal = gy
+    signal = ay
     fs = 500
 
 
@@ -177,7 +179,7 @@ while iterration <= lenth:
 
     plt.figure(4);
     plt.title('Gx')
-    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest');
+    plt.pcolormesh(stft_time, stft_frequency, signal_stft_abs, shading='nearest',cmap='Reds');
     
     plt.ylabel('Frequency (Hz)');
     plt.xlabel('Time (s)');

@@ -1,0 +1,5 @@
+Data  =bytearray(b'\x03\x00\x00\x00\x00\x00\xd3=\x00\x00O\xbd\x00Pu?\xae\r\x93\xc0}@-\xc2\xa2\x0f\xa8?\xbd\xae\x05\xbe-={>\xfe3\xd1=')
+import struct
+print(len(Data))
+unpackedData = struct.unpack('<ifffffffff',Data)
+print(unpackedData)
