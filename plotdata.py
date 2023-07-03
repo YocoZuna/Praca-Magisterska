@@ -10,7 +10,7 @@ import MovingAvrgFilter
 first_sample = 1280
 lista = [ ]
 listsize = 0
-PathToFile = "TestMQTTServerS.txt"
+PathToFile = "Data_test_1024_samples.txt"
 
 MovingAvr = MovingAvrgFilter.Moving_Avgr_Filter()
 
@@ -24,10 +24,10 @@ except:
     print("Could not open CSV file\n")
     
 temp = 0
-for i in range(0,(int(listsize/1))):
+for i in range(0,(int(listsize/256))):
     
     lista.append(temp)
-    temp = temp +1
+    temp = temp +256
 
 
 
@@ -58,10 +58,10 @@ while iterration <= lenth:
     pb =[]
     pc = []
 
-    for line in lines:
+    for line in dataset:
         if len(line) > 1:
             line = line[3:len(line)-3]
-          
+            
             sample,aax,aay,aaz,xx,yy,zz,phasea,phaseb,phasec = line.split(',')
             t.append(float(sample))
             ax.append(float(aax)-0.1044676)
@@ -75,41 +75,41 @@ while iterration <= lenth:
             pa.append(float(phasea))
             pb.append(float(phaseb))
             pc.append(float(phasec))
-        
+            
 
 
 
 
 
-    # For Sine Function
-    """    axis[0, 0].plot(t, ax)
-        
-        plt.ylim(-1,1)
-        axis[0, 0].set_title("Ax")
-        #plt.savefig('my_plot.png')
-        axis[1, 0].plot(t, ay)
-        plt.ylim(-1,1)
-        axis[1, 0].set_title("Ay")
-        #plt.savefig('my_plot.png')
-        axis[2, 0].plot(t, az)
-        plt.ylim(-1,1)
-        axis[2, 0].set_title("Az")
-        #plt.savefig('my_plot.png')
-        # For Cosine Function
-        axis[0, 1].plot(t,x)
-        plt.ylim(-1,1)
-        axis[0, 1].set_title("Gx")
-        #plt.savefig('my_plot.png')
-        axis[1, 1].plot(t, y)
-        plt.ylim(-1,1)
-        axis[1, 1].set_title("Gy")
-        #plt.savefig('my_plot.png')
-        axis[2, 1].plot(t, z)
-        plt.ylim(-1,1)
-        axis[2, 1].set_title("Gz")
-        #plt.savefig('my_plot.png')
-        plt.ylim(-1,1)
-    """
+        # For Sine Function
+        """    axis[0, 0].plot(t, ax)
+            
+            plt.ylim(-1,1)
+            axis[0, 0].set_title("Ax")
+            #plt.savefig('my_plot.png')
+            axis[1, 0].plot(t, ay)
+            plt.ylim(-1,1)
+            axis[1, 0].set_title("Ay")
+            #plt.savefig('my_plot.png')
+            axis[2, 0].plot(t, az)
+            plt.ylim(-1,1)
+            axis[2, 0].set_title("Az")
+            #plt.savefig('my_plot.png')
+            # For Cosine Function
+            axis[0, 1].plot(t,x)
+            plt.ylim(-1,1)
+            axis[0, 1].set_title("Gx")
+            #plt.savefig('my_plot.png')
+            axis[1, 1].plot(t, y)
+            plt.ylim(-1,1)
+            axis[1, 1].set_title("Gy")
+            #plt.savefig('my_plot.png')
+            axis[2, 1].plot(t, z)
+            plt.ylim(-1,1)
+            axis[2, 1].set_title("Gz")
+            #plt.savefig('my_plot.png')
+            plt.ylim(-1,1)
+        """
 
     plt.figure(1)
     plt.plot(t, pa,'r')
@@ -119,9 +119,9 @@ while iterration <= lenth:
     plt.show()
 
 
- 
-    #plt.ylim(-17,17)
     
-#os.remove("C:\\Users\\dawid\\Desktop\\Python\\test.csv")
-  
-# Creating vectors X and Y where Y is predicted value X input values  
+    #plt.ylim(-17,17)
+        
+    #os.remove("C:\\Users\\dawid\\Desktop\\Python\\test.csv")
+    
+    # Creating vectors X and Y where Y is predicted value X input values  
