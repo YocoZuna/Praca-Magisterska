@@ -76,40 +76,40 @@ while iterration <= lenth:
             pb.append(float(phaseb))
             pc.append(float(phasec))
             
+    print(f" Time_Start {t[0]}\n Time_End {t[-1]}\n")
 
 
 
 
-
-        # For Sine Function
-        """    axis[0, 0].plot(t, ax)
-            
-            plt.ylim(-1,1)
-            axis[0, 0].set_title("Ax")
-            #plt.savefig('my_plot.png')
-            axis[1, 0].plot(t, ay)
-            plt.ylim(-1,1)
-            axis[1, 0].set_title("Ay")
-            #plt.savefig('my_plot.png')
-            axis[2, 0].plot(t, az)
-            plt.ylim(-1,1)
-            axis[2, 0].set_title("Az")
-            #plt.savefig('my_plot.png')
-            # For Cosine Function
-            axis[0, 1].plot(t,x)
-            plt.ylim(-1,1)
-            axis[0, 1].set_title("Gx")
-            #plt.savefig('my_plot.png')
-            axis[1, 1].plot(t, y)
-            plt.ylim(-1,1)
-            axis[1, 1].set_title("Gy")
-            #plt.savefig('my_plot.png')
-            axis[2, 1].plot(t, z)
-            plt.ylim(-1,1)
-            axis[2, 1].set_title("Gz")
-            #plt.savefig('my_plot.png')
-            plt.ylim(-1,1)
-        """
+    # For Sine Function
+    """    axis[0, 0].plot(t, ax)
+        
+        plt.ylim(-1,1)
+        axis[0, 0].set_title("Ax")
+        #plt.savefig('my_plot.png')
+        axis[1, 0].plot(t, ay)
+        plt.ylim(-1,1)
+        axis[1, 0].set_title("Ay")
+        #plt.savefig('my_plot.png')
+        axis[2, 0].plot(t, az)
+        plt.ylim(-1,1)
+        axis[2, 0].set_title("Az")
+        #plt.savefig('my_plot.png')
+        # For Cosine Function
+        axis[0, 1].plot(t,x)
+        plt.ylim(-1,1)
+        axis[0, 1].set_title("Gx")
+        #plt.savefig('my_plot.png')
+        axis[1, 1].plot(t, y)
+        plt.ylim(-1,1)
+        axis[1, 1].set_title("Gy")
+        #plt.savefig('my_plot.png')
+        axis[2, 1].plot(t, z)
+        plt.ylim(-1,1)
+        axis[2, 1].set_title("Gz")
+        #plt.savefig('my_plot.png')
+        plt.ylim(-1,1)
+    """
 
     plt.figure(1)
     plt.plot(t, pa,'r')
