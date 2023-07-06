@@ -67,7 +67,8 @@ for line in dataset:
             pb.append(float(phaseb))
             pc.append(float(phasec))
 
-
+minima = min(pa)
+maxima = max(pa)
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
 
