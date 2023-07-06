@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import pandas as pd 
 from scipy import signal as sp 
 import math
@@ -67,8 +68,18 @@ for line in dataset:
             pb.append(float(phaseb))
             pc.append(float(phasec))
 
-minima = min(pa)
-maxima = max(pa)
+minima = np.min(pa)
+pa = [x - minima for x in pa]
+maxima = np.max(pa)
+pa = [x * (255/maxima) for x in pa]
+np.round(pa, 1)
+
+norm = matplotlib.colors.Normalize(vmin=minima, vmax=maxima, clip=True)
+mapper = cm.ScalarMappable(norm=norm, cmap=my_cmap_red)
+
+for v in pa:
+    print(mapper.to_rgba(v))
+
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
 
