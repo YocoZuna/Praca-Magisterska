@@ -76,9 +76,13 @@ pa_temp = [x * (255/maxima) for x in pa_temp]
 for i in range(0,len(pa_temp)):
     pa_temp[i] = int(np.round(pa_temp[i]))
 
+#for i in range (0,)
+np.resize(pa_temp,(16,16,3))
+pa_temp.insert(0, 0)
 
+pa_2D = np.ones([16,16,3], dtype=np.uint8)-1
 
-
+proba = pa_temp + pa_2D
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
 
