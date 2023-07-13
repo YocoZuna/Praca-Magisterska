@@ -38,63 +38,50 @@ for i in range(0,(int(listsize))):
     lista.append(temp)
     temp = temp +1
 
-t = []
-ax=[]
-max = []
-ay = []
-az = []
-x = []
-y = []
-z = []
-pa = []
-pb =[]
-pc = []
+t_temp = []
+ax_temp=[]
+max_temp = []
+ay_temp = []
+az_temp = []
+x_temp = []
+y_temp = []
+z_temp = []
+pa_temp = []
+pb_temp =[]
+pc_temp = []
 
 for line in dataset:
         if len(line) > 1:
             line = line[3:len(line)-3]
             
             sample,aax,aay,aaz,xx,yy,zz,phasea,phaseb,phasec = line.split(',')
-            t.append(float(sample))
-            ax.append(float(aax)-0.1044676)
-            ay.append(float(aay)+0.0477295)
-            az.append(float(aaz)-0.9561013)
+            t_temp.append(float(sample))
+            ax_temp.append(float(aax)-0.1044676)
+            ay_temp.append(float(aay)+0.0477295)
+            az_temp.append(float(aaz)-0.9561013)
 
-            x.append(float(xx)+4.5992367)
-            y.append(float(yy)+43.36626)
-            z.append(float(zz)-1.5074805)
+            x_temp.append(float(xx)+4.5992367)
+            y_temp.append(float(yy)+43.36626)
+            z_temp.append(float(zz)-1.5074805)
             
-            pa.append(float(phasea))
-            pb.append(float(phaseb))
-            pc.append(float(phasec))
+            pa_temp.append(float(phasea))
+            pb_temp.append(float(phaseb))
+            pc_temp.append(float(phasec))
 
-minima = np.min(pa)
-pa = [x - minima for x in pa]
-maxima = np.max(pa)
-pa = [x * (255/maxima) for x in pa]
-np.round(pa, 1)
+minima = np.min(pa_temp)
+pa_temp = [x - minima for x in pa_temp]
+maxima = np.max(pa_temp)
+pa_temp = [x * (255/maxima) for x in pa_temp]
 
-norm = matplotlib.colors.Normalize(vmin=minima, vmax=maxima, clip=True)
-mapper = cm.ScalarMappable(norm=norm, cmap=my_cmap_red)
+for i in range(0,len(pa_temp)):
+    pa_temp[i] = int(np.round(pa_temp[i]))
 
-for v in pa:
-    print(mapper.to_rgba(v))
+
+
 
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
 
-lista.clear()
-t.clear()
-ax.clear()
-max.clear()
-ay.clear()
-az.clear()
-x.clear()
-y.clear()
-z.clear()
-pa.clear()
-pb.clear()
-pc.clear()
 
 temp = 0
 for i in range(0,(int(listsize/256))):
