@@ -148,8 +148,7 @@ while iterration <= lenth:
     #plt.plot(t,z,'g')
     plt.show()
 
-    pa_temp = pa_temp.tolist()
-    pa_temp.clear()
+    np.delete(pa_temp, True)
     
     #plt.ylim(-17,17)
         
