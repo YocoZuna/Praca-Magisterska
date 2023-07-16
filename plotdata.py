@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd 
-from sklearn.impute import SimpleImputer
+#from sklearn.impute import SimpleImputer
 import MovingAvrgFilter
 #importing data set
 #dataset = open("test.csv",'r').read()

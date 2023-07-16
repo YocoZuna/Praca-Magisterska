@@ -17,7 +17,7 @@ count = 0
 lista = [ ]
 listsize = 0
 temp = 0
-PathToFile = "Data_test_1024_samples.txt"
+PathToFile = "50kDataPacket.txt"
 
 cm = Colormap()
 my_cmap_red = cm.cmap_bicolor('black', 'red')
@@ -31,12 +31,6 @@ try:
 except:
     print("Could not open CSV file\n")
 
-example =[]
-
-for i in range(0,(int(listsize))):
-    
-    lista.append(temp)
-    temp = temp +1
 
 t_temp = []
 ax_temp=[]
@@ -76,13 +70,6 @@ pa_temp = [x * (255/maxima) for x in pa_temp]
 for i in range(0,len(pa_temp)):
     pa_temp[i] = int(np.round(pa_temp[i]))
 
-#for i in range (0,)
-np.resize(pa_temp,(16,16,3))
-pa_temp.insert(0, 0)
-
-pa_2D = np.ones([16,16,3], dtype=np.uint8)-1
-
-proba = pa_temp + pa_2D
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
 
@@ -95,12 +82,14 @@ for i in range(0,(int(listsize/256))):
 
 lenth = len(lista)
 iterration= 0
+add_zeros_pa = 0
 while iterration <= lenth:
     try:
         dataset = open(PathToFile,'r').readlines()
         temp1 = lista[iterration]
         temp2 = lista[iterration+1]
         dataset = dataset[temp1:temp2]
+        pa_temp = pa_temp[temp1:temp2]
     except:
         break
     
@@ -137,8 +126,20 @@ while iterration <= lenth:
             pa.append(float(phasea))
             pb.append(float(phaseb))
             pc.append(float(phasec))
+
+    for i in range(0, len(pa_temp)):
+        pa_temp.insert(add_zeros_pa+1, 0)
+        pa_temp.insert(add_zeros_pa+2, 0)
+        add_zeros_pa = add_zeros_pa + 3
     
+    pa_temp = np.asarray(pa_temp)
+    pa_temp = pa_temp.astype(np.uint8)
+    pa_temp.resize(16,16,3)
+
     print(f" Time_Start {t[0]}\n Time_End {t[-1]}\n") 
+ 
+    im = Image.fromarray(pa_temp)
+    im.show()
 
     plt.figure(1)
     plt.plot(t, pa,'r')
