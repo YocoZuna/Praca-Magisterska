@@ -17,7 +17,7 @@ count = 0
 lista = [ ]
 listsize = 0
 temp = 0
-PathToFile = "50kDataPacket.txt"
+PathToFile = "Data_test_1024_samples.txt"
 
 cm = Colormap()
 my_cmap_red = cm.cmap_bicolor('black', 'red')
@@ -40,9 +40,9 @@ az_temp = []
 x_temp = []
 y_temp = []
 z_temp = []
-pa_temp = []
-pb_temp =[]
-pc_temp = []
+pa_RGB = []
+pb_RGB =[]
+pc_RGB = []
 
 for line in dataset:
         if len(line) > 1:
@@ -58,17 +58,17 @@ for line in dataset:
             y_temp.append(float(yy)+43.36626)
             z_temp.append(float(zz)-1.5074805)
             
-            pa_temp.append(float(phasea))
-            pb_temp.append(float(phaseb))
-            pc_temp.append(float(phasec))
+            pa_RGB.append(float(phasea))
+            pb_RGB.append(float(phaseb))
+            pc_RGB.append(float(phasec))
 
-minima = np.min(pa_temp)
-pa_temp = [x - minima for x in pa_temp]
-maxima = np.max(pa_temp)
-pa_temp = [x * (255/maxima) for x in pa_temp]
+minima = np.min(pa_RGB)
+pa_RGB = [x - minima for x in pa_RGB]
+maxima = np.max(pa_RGB)
+pa_RGB = [x * (255/maxima) for x in pa_RGB]
 
-for i in range(0,len(pa_temp)):
-    pa_temp[i] = int(np.round(pa_temp[i]))
+for i in range(0,len(pa_RGB)):
+    pa_RGB[i] = int(np.round(pa_RGB[i]))
 
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
@@ -89,7 +89,7 @@ while iterration <= lenth:
         temp1 = lista[iterration]
         temp2 = lista[iterration+1]
         dataset = dataset[temp1:temp2]
-        pa_temp = pa_temp[temp1:temp2]
+        pa_temp = pa_RGB[temp1:temp2]
     except:
         break
     
@@ -127,7 +127,7 @@ while iterration <= lenth:
             pb.append(float(phaseb))
             pc.append(float(phasec))
 
-    for i in range(0, len(pa_temp)):
+    for i in range(0, len(pa_RGB)):
         pa_temp.insert(add_zeros_pa+1, 0)
         pa_temp.insert(add_zeros_pa+2, 0)
         add_zeros_pa = add_zeros_pa + 3
@@ -148,7 +148,8 @@ while iterration <= lenth:
     #plt.plot(t,z,'g')
     plt.show()
 
-
+    pa_temp = pa_temp.tolist()
+    pa_temp.clear()
     
     #plt.ylim(-17,17)
         
