@@ -153,27 +153,31 @@ while iterration <= lenth:
         pc_temp.insert(add_zeros_pc-1, 0)
         add_zeros_pc = add_zeros_pc + 3
     
-    pa_temp = np.asarray(pa_temp)
-    pa_temp = pa_temp.astype(np.uint8)
-    np.resize(pa_temp, (16,16,3))
+    pa_temp1 = np.asarray(pa_temp)
+    pa_temp1 = pa_temp1.astype(np.uint8)
+    pa_temp1 = np.resize(pa_temp1, (16,16,3))
 
-    pb_temp = np.asarray(pb_temp)
-    pb_temp = pb_temp.astype(np.uint8)
-    np.resize(pb_temp, (16,16,3))
+    pb_temp1 = np.asarray(pb_temp)
+    pb_temp1 = pb_temp1.astype(np.uint8)
+    pb_temp1 = np.resize(pb_temp1, (16,16,3))
 
-    pc_temp = np.asarray(pc_temp)
-    pc_temp = pc_temp.astype(np.uint8)
-    np.resize(pc_temp, (16,16,3))
+    pc_temp1 = np.asarray(pc_temp)
+    pc_temp1 = pc_temp1.astype(np.uint8)
+    pc_temp1 = np.resize(pc_temp1, (16,16,3))
 
     print(f" Time_Start {t[0]}\n Time_End {t[-1]}\n") 
  
-    imr = Image.fromarray(pa_temp)
-    img = Image.fromarray(pb_temp)
-    imb = Image.fromarray(pc_temp)
+    imr = Image.fromarray(pa_temp1)
+    img = Image.fromarray(pb_temp1)
+    imb = Image.fromarray(pc_temp1)
 
     imr.show()
     img.show()
     imb.show()
+
+    pa_temp.clear()
+    pb_temp.clear()
+    pc_temp.clear()
 
     plt.figure(1)
     plt.plot(t, pa,'r')
