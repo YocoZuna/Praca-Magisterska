@@ -19,11 +19,6 @@ listsize = 0
 temp = 0
 PathToFile = "Data_test_1024_samples.txt"
 
-cm = Colormap()
-my_cmap_red = cm.cmap_bicolor('black', 'red')
-my_cmap_green = cm.cmap_bicolor('black', 'green')
-my_cmap_blue = cm.cmap_bicolor('black', 'blue')
-
 try:
     dataset = open(PathToFile,'r').readlines()
     listsize = len(dataset)
@@ -67,8 +62,20 @@ pa_RGB = [x - minima for x in pa_RGB]
 maxima = np.max(pa_RGB)
 pa_RGB = [x * (255/maxima) for x in pa_RGB]
 
+minima = np.min(pb_RGB)
+pb_RGB = [x - minima for x in pb_RGB]
+maxima = np.max(pb_RGB)
+pb_RGB = [x * (255/maxima) for x in pb_RGB]
+
+minima = np.min(pc_RGB)
+pc_RGB = [x - minima for x in pc_RGB]
+maxima = np.max(pc_RGB)
+pc_RGB = [x * (255/maxima) for x in pc_RGB]
+
 for i in range(0,len(pa_RGB)):
     pa_RGB[i] = int(np.round(pa_RGB[i]))
+    pb_RGB[i] = int(np.round(pb_RGB[i]))
+    pc_RGB[i] = int(np.round(pc_RGB[i]))
 
 # dataset = open(PathToFile,'r').readlines()
 # phasea,phaseb,phasec = line.split(',')
@@ -83,6 +90,8 @@ for i in range(0,(int(listsize/256))):
 lenth = len(lista)
 iterration= 0
 add_zeros_pa = 0
+add_zeros_pb = 1
+add_zeros_pc = 1
 while iterration <= lenth:
     try:
         dataset = open(PathToFile,'r').readlines()
@@ -90,6 +99,8 @@ while iterration <= lenth:
         temp2 = lista[iterration+1]
         dataset = dataset[temp1:temp2]
         pa_temp = pa_RGB[temp1:temp2]
+        pb_temp = pb_RGB[temp1:temp2]
+        pc_temp = pc_RGB[temp1:temp2]
     except:
         break
     
@@ -131,15 +142,38 @@ while iterration <= lenth:
         pa_temp.insert(add_zeros_pa+1, 0)
         pa_temp.insert(add_zeros_pa+2, 0)
         add_zeros_pa = add_zeros_pa + 3
+
+    for i in range(0, len(pb_RGB)):
+        pb_temp.insert(add_zeros_pb-1, 0)
+        pb_temp.insert(add_zeros_pb+1, 0)
+        add_zeros_pb = add_zeros_pb + 3
+
+    for i in range(0, len(pc_RGB)):
+        pc_temp.insert(add_zeros_pc-1, 0)
+        pc_temp.insert(add_zeros_pc-1, 0)
+        add_zeros_pc = add_zeros_pc + 3
     
     pa_temp = np.asarray(pa_temp)
     pa_temp = pa_temp.astype(np.uint8)
-    pa_temp.resize(16,16,3)
+    np.resize(pa_temp, (16,16,3))
+
+    pb_temp = np.asarray(pb_temp)
+    pb_temp = pb_temp.astype(np.uint8)
+    np.resize(pb_temp, (16,16,3))
+
+    pc_temp = np.asarray(pc_temp)
+    pc_temp = pc_temp.astype(np.uint8)
+    np.resize(pc_temp, (16,16,3))
 
     print(f" Time_Start {t[0]}\n Time_End {t[-1]}\n") 
  
-    im = Image.fromarray(pa_temp)
-    im.show()
+    imr = Image.fromarray(pa_temp)
+    img = Image.fromarray(pb_temp)
+    imb = Image.fromarray(pc_temp)
+
+    imr.show()
+    img.show()
+    imb.show()
 
     plt.figure(1)
     plt.plot(t, pa,'r')
@@ -147,8 +181,6 @@ while iterration <= lenth:
     #plt.plot(t,y,'b')
     #plt.plot(t,z,'g')
     plt.show()
-
-    np.delete(pa_temp, True)
     
     #plt.ylim(-17,17)
         
