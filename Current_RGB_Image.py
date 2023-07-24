@@ -89,9 +89,7 @@ for i in range(0,(int(listsize/256))):
 
 lenth = len(lista)
 iterration= 0
-add_zeros_pa = 0
-add_zeros_pb = 1
-add_zeros_pc = 1
+
 while iterration <= lenth:
     try:
         dataset = open(PathToFile,'r').readlines()
@@ -137,7 +135,9 @@ while iterration <= lenth:
             pa.append(float(phasea))
             pb.append(float(phaseb))
             pc.append(float(phasec))
-
+    add_zeros_pa = 0
+    add_zeros_pb = 1
+    add_zeros_pc = 1
     for i in range(0, len(pa_RGB)):
         pa_temp.insert(add_zeros_pa+1, 0)
         pa_temp.insert(add_zeros_pa+2, 0)
@@ -152,7 +152,8 @@ while iterration <= lenth:
         pc_temp.insert(add_zeros_pc-1, 0)
         pc_temp.insert(add_zeros_pc-1, 0)
         add_zeros_pc = add_zeros_pc + 3
-    
+
+ 
     pa_temp1 = np.asarray(pa_temp)
     pa_temp1 = pa_temp1.astype(np.uint8)
     pa_temp1 = np.resize(pa_temp1, (16,16,3))
