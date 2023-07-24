@@ -105,36 +105,8 @@ while iterration <= lenth:
     #lines = dataset.split("\n")
     iterration+=1
     lines = dataset
-    
-    t = []
-    ax=[]
-    max = []
-    ay = []
-    az = []
-    x = []
-    y = []
-    z = []
-    pa = []
-    pb =[]
-    pc = []
 
-    for line in dataset:
-        if len(line) > 1:
-            line = line[3:len(line)-3]
-            
-            sample,aax,aay,aaz,xx,yy,zz,phasea,phaseb,phasec = line.split(',')
-            t.append(float(sample))
-            ax.append(float(aax)-0.1044676)
-            ay.append(float(aay)+0.0477295)
-            az.append(float(aaz)-0.9561013)
 
-            x.append(float(xx)+4.5992367)
-            y.append(float(yy)+43.36626)
-            z.append(float(zz)-1.5074805)
-            
-            pa.append(float(phasea))
-            pb.append(float(phaseb))
-            pc.append(float(phasec))
     add_zeros_pa = 0
     add_zeros_pb = 1
     add_zeros_pc = 1
@@ -166,7 +138,7 @@ while iterration <= lenth:
     pc_temp1 = pc_temp1.astype(np.uint8)
     pc_temp1 = np.resize(pc_temp1, (16,16,3))
 
-    print(f" Time_Start {t[0]}\n Time_End {t[-1]}\n") 
+
  
     imr = Image.fromarray(pa_temp1)
     img = Image.fromarray(pb_temp1)
@@ -181,7 +153,7 @@ while iterration <= lenth:
     pc_temp.clear()
 
     plt.figure(1)
-    plt.plot(t, pa,'r')
+
 
     #plt.plot(t,y,'b')
     #plt.plot(t,z,'g')
